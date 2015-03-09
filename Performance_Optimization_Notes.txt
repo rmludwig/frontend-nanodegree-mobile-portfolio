@@ -1,0 +1,117 @@
+Nano Degree
+
+Website Perfromance Optimization Notes
+
+ - CRP (Critical Rendering Path) is a sequence of steps the browser goes
+   through to render a page.
+ - The CRP is DOM <-JS-> CSSOM -> Render Tree -> Layout -> Paint
+ - NOTE: Final project will include a profile that we optimize
+   with a goal of less than 100.
+ - Instructor Notes
+
+    Download and install Chrome Canary (it will not interfere with your regular Chrome)
+    On Linux, the Chromium Dev channel is similar to Canary.
+    Learn about Remote Debugging on Android with Chrome
+    
+    Why should I profile the site on my phone?
+
+    Chances are, you are developing your site on a fast laptop or a desktop machine. Mobile phones on the other hand are much more resource constrained: slower CPUs, less RAM and GPU memory, higher connection latencies, and so on. As a result, you should always try to profile and debug your site on mobile hardware to get a better and closer picture of how your users will experience your site on their handset.
+
+    What is Chrome Canary and why should I use it?
+
+    Chrome Canary is the developer version of Chrome. It looks and acts like the regular Chrome browser, but it includes new and experimental features that haven't been released yet. We recommend analyzing websites with Canary to take advantage of the latest tech. However, be warned that Canary isn't guaranteed to be stable, so expect crashes and occasional bugs.
+
+ - Mobile Debugging with Android -> Check out the P4 video. Requires 
+   android device. Not able to do this at this time (ima apple guy).
+ - Mobile Debugging with Apple -> iOS WebKit Debug Proxy: 
+   https://github.com/google/ios-webkit-debug-proxy
+ - Instructor Notes
+
+    What if I don't have a phone handy?
+
+    For a quick how-to on emulating mobile devices with Chrome Canary, see Device Mode & Mobile Emulation: https://developer.chrome.com/devtools/docs/device-mode
+
+    Mobile device emulation is demonstrated in Lesson 1 video 4: CNN’s Timeline Trace.
+
+ - DOM is built as Characters (raw text) -> Tokens (tags) -> 
+   Nodes (relationsips and content)-> DOM (fully parsed representation)
+ - Returning partial HTML can speed up page loading considerable. 
+   Incremental page loading like with google search.
+ - HTML Response -> Token -> Nodes ->DOM TREE
+ - Between start tags and end tags you may have many other tokens 
+   all forming the node.
+ - Nodes contain all relevant information about the HTML element
+ - Nodes are connected into a DOM tree based on token Hierarchy.
+ - CSSOM (CSS Object Model) is built as Characters(CSS code) -> 
+   Tokens (each chunk of css) -> Nodes (as related to DOM with 
+  enheritance [cascading]) -> CSSOM
+ - CSS must all be processed at once. You cannot break it up like HTML.
+ - CSS IS RENDER BLOCKING!!!
+ - More general CSS rules process faster.
+ - FOR MOBILE SITES always set the meta viewport like:
+   <meta name="viewport" content="width=device-width">
+   to make mobile pages match the mobile device width
+ - When page is resized the layout step has to run again.
+ - Batch updates to reduce recalling layout over and over again.
+ - GOOD TEST TOOL -- webpagetest.org
+ - HTML Rendering Overview
+  * Begin constructing the DOM by parsing the HTML
+  * Request CSS & JS resources
+  * PArse CSS and construct the CSSOM tree
+  * Execute JS
+  * Merge DOM and CSSOM into the render tree
+  * Run layout, paint
+ - JS is syncronous and will not run until CSS is available
+ - Ctrl-E then Ctrl-R to capture a reload timeline in dev tools.
+ - Minify and making inline CSS can speed up a page.
+ - Optimizing the DOM & CSSOM
+  + FOR HTML keep it as small as possible.
+  + 1 minify
+  + 2 compress
+  + 3 cache
+  + For CSS use the below strategies:
+    Split CSS for different media queries into different files. Then
+    use the below type of link statement to control when that file
+    gets involved in render blocking.
+    <link rel="stylesheet" href="style-print.css" media="print">
+  + For JavaScript use the following strategies:
+    * Start with minify, compress, cashe.
+    * Modify parser blocking scripts.
+    * Javascript is parser blocking because it blocks DOM construction
+      when a script call or inline script is encountered.
+    * So for code that is specific to one page you should try to include 
+      it inline. Only put JS in an external file when used by other pages.
+      This eliminates the need to download a file when JS is encountered 
+      in rendering.
+    * CSS blocks rendering and JS execution. JS is only executed after
+      CSSOM is completed.
+    * Use the onLoad event to load javascript not involved in the 
+      critical rendering path.
+    * The asyncronous argument will tell the browser that the JS file is
+      not a part of the critical rendering path. Use the tag like:
+      <script src="analytics.js" async></script>
+      This prevents blocking the DOM and CSSOM creation.
+    * For inline scripts they always block. With one exception! IF the 
+      inline JS is above the inline CSS then it will execute without 
+      blocking on CSS.
+ 
+ - HIGH LEVEL PLAN
+  + Minify, Compress, Cache (HTML, CSS, Javascript)
+  + Minimize use of render blocking resources (CSS)
+    1 Use media queries on <link> to unblock rendering
+    2 Inline CSS
+  + Minimize use of parser blocking resources (JS)
+    1 Defere JS execution (onLoad)
+    2 Use "async" attribute on script tag.
+ - This can be distilled to:
+  ! Minimize Bytes to download
+  ! Reduce critical resources
+  ! Shorten the Critical rendering path length.
+    + Nunmber of critical Kb [Keep files under 14Kb]
+    + Reduce the Critical rendering files/resources
+    + Reduce the number of round trips or critical path length
+
+
+
+
+ 
