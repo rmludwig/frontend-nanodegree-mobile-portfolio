@@ -64,9 +64,9 @@ moved width assignment outside the loop
 changed height on pizzas to make room for the Udacity special when size is small
 
 
+minify with gulp
 
-
-
+http://travismaynard.com/writing/getting-started-with-gulp
 
 
 

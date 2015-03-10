@@ -437,6 +437,7 @@ var resizePizzas = function(size) {
   changeSliderLabel(size);
 
   // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
+  // Changed to more efficient getElementById
   function determineDx (elem, size) {
     var oldwidth = elem.offsetWidth;
     var windowwidth = document.getElementById("randomPizzas").offsetWidth;
@@ -466,12 +467,14 @@ var resizePizzas = function(size) {
     return dx;
   }
 
+  // Removed from loop below to save time.
   // Prepare new width shared by all pizza using the width of pizza0
   var dx = determineDx(document.getElementById("pizza0"), size);
   var newwidth = (document.getElementById("pizza0").offsetWidth + dx) + 'px';
 
 
   // Iterates through pizza elements on the page and changes their widths
+  // Changed to more efficient getElementByClassName
   function changePizzaSizes(size) {
     for (var i = 0; i < document.getElementsByClassName("randomPizzaContainer").length; i++) {
       document.getElementById("pizza"+i).style.width = newwidth;
@@ -489,9 +492,11 @@ var resizePizzas = function(size) {
 
 window.performance.mark("mark_start_generating"); // collect timing data
 
+// Moved this outside the loop to speed up initial page load
+var pizzasDiv = document.getElementById("randomPizzas");
+
 // This for-loop actually creates and appends all of the pizzas when the page loads
 for (var i = 2; i < 100; i++) {
-  var pizzasDiv = document.getElementById("randomPizzas");
   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
 
