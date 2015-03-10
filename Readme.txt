@@ -53,10 +53,15 @@ TESTING
 
 #### Part 2 (pizza fps)
 
+querySelector
+querySelectorAll (read about perfromance issues when used in loops due to static node list which takes longer to build as opposed to Live node list that is built as needed on the fly)
+->>>
+  getElementById  
+  getElementsByClassName
 
+moved width assignment outside the loop
 
-
-
+changed height on pizzas to make room for the Udacity special when size is small
 
 
 
