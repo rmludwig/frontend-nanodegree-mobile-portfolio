@@ -508,10 +508,26 @@ function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
+  // Changed to getElementByClassName to imporve performance
   var items = document.getElementsByClassName('mover');
+
+  // Reduced workload in the loop
   var scrollTop = (document.body.scrollTop / 1250);
+  var modulusZero = Math.sin(scrollTop + 0);
+  var modulusOne = Math.sin(scrollTop + 1);
+  var modulusTwo = Math.sin(scrollTop + 2);
+  var modulusThree = Math.sin(scrollTop + 3);
+  var modulusFour = Math.sin(scrollTop + 4);
+
   for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin(scrollTop + (i % 5));
+    var phase;
+    // Utilize pre-calculated values.
+    if ((i % 5) === 0 ) {phase = modulusZero;}
+    else if ((i % 5) === 1 ) {phase = modulusOne;}
+    else if ((i % 5) === 2 ) {phase = modulusTwo;}
+    else if ((i % 5) === 3 ) {phase = modulusThree;}
+    else if ((i % 5) === 4 ) {phase = modulusFour;}
+    // Is there a better way to do this? Something that paints faster?
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
   }
 
@@ -532,18 +548,17 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+  // Each row is 256 px high, 8 cols, Setting max window size to ~2560 px tall (10 row)
+  // so max number of movers is 80 to speed this up
+  for (var i = 0; i < 80; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
-    elem.src = "images/pizza.png";
+    elem.src = "images/pizza-sm.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     document.getElementById("movingPizzas1").appendChild(elem);
-
-    //rml testing
-    //console.log("addEventListener");
   }
   updatePositions();
 });
