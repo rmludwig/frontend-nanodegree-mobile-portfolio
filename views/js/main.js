@@ -374,7 +374,7 @@ var pizzaElementGenerator = function(i) {
 
   pizzaContainer.classList.add("randomPizzaContainer");
   pizzaContainer.style.width = "33.33%";
-  pizzaContainer.style.height = "325px";
+  pizzaContainer.style.height = "350px";
   pizzaContainer.id = "pizza" + i;                // gives each pizza element a unique id
   pizzaImageContainer.classList.add("col-md-6");
 
@@ -445,15 +445,21 @@ var resizePizzas = function(size) {
     var newsize = sizeSwitcher(size);
     var dx = (newsize - oldsize) * windowwidth;
 
+    //rml logging for testing
+    //console.log("determineDx called");
+
     return dx;
   }
 
+  // Prepare new width shared by all pizza using the width of pizza0
+  var dx = determineDx(document.getElementById("pizza0"), size);
+  var newwidth = (document.getElementById("pizza0").offsetWidth + dx) + 'px';
+
+
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
-    for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
-      var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
-      var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
-      document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
+    for (var i = 0; i < document.getElementsByClassName("randomPizzaContainer").length; i++) {
+      document.getElementById("pizza"+i).style.width = newwidth;
     }
   }
 
@@ -502,7 +508,7 @@ function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
-  var items = document.querySelectorAll('.mover');
+  var items = document.getElementsByClassName('mover');
   for (var i = 0; i < items.length; i++) {
     var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
@@ -533,7 +539,10 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    document.getElementById("movingPizzas1").appendChild(elem);
+
+    //rml testing
+    console.log("addEventListener");
   }
   updatePositions();
 });

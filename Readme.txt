@@ -9,6 +9,11 @@ INSTRUCTIONS
   - For instructions on the projects please see the README.md file provided as a part of the forked portfolio.
   - Additional information can be found on P4, including the rubric, at https://www.udacity.com/course/viewer/#!/c-nd001/l-2735848561/m-2664138537
 
+
+TESTING INSTRUCTIONS
+  - To test the main index.tml load it in your browser and run timeoine in dev tools. Also the google pagespeed insights site can be used one you set up a local web server to host the page and create the ngrok tunnel.
+
+
 RICH's NOTES
   - I decided to complete this project on my MAC at home rather than completing the project on my laptop where I completed other projects.
   - In order to setup the MAC for this type of testing I followed the bash example and the ngrok setup instructions found at https://ngrok.com (where I also downloaded the .zip for that app)
@@ -16,9 +21,10 @@ RICH's NOTES
   - I forked the portfolio into my repo then cloned to the MAC. From there I started my first round of testing. Below I have captured the specific testing data from my testing.
  
 
-
-TEST  
+TESTING
  #### Part 1 (pagespeed-insights)
+   NOTE: Each test starts with pagespeed insights PC score|Mobile score, and several Desctop|Mobile page load speeds.
+
    1. 89|75 m, 9.52|3.93|3.76 m
       Initial test without any changes
    2. 89|78 m, 3.56|3.42 m
@@ -45,6 +51,7 @@ TEST
     Look more closely at image optimizations.
     Look into compression oportunities for images and other files.
 
+#### Part 2 (pizza fps)
 
 
 
