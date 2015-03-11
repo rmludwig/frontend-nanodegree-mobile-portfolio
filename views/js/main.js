@@ -414,6 +414,7 @@ var pizzaElementGenerator = function(i) {
 };
 
 // resizePizzas(size) is called when the slider in the "Our Pizzas" section of the website moves.
+// Improved resize method
 var resizePizzas = function(size) { 
   window.performance.mark("mark_start_resize");   // User Timing API function
 
@@ -437,7 +438,7 @@ var resizePizzas = function(size) {
   changeSliderLabel(size);
 
   // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
-  // Changed to more efficient getElementById
+  // Changed to more efficient getElementById 
   function determineDx (elem, size) {
     var oldwidth = elem.offsetWidth;
     var windowwidth = document.getElementById("randomPizzas").offsetWidth;
@@ -476,7 +477,7 @@ var resizePizzas = function(size) {
   // Iterates through pizza elements on the page and changes their widths
   // Changed to more efficient getElementByClassName
   function changePizzaSizes(size) {
-    for (var i = 0; i < document.getElementsByClassName("randomPizzaContainer").length; i++) {
+    for (var i = 0; i < RandomPizzasLength; i++) {
       document.getElementById("pizza"+i).style.width = newwidth;
     }
   }
@@ -499,6 +500,12 @@ var pizzasDiv = document.getElementById("randomPizzas");
 for (var i = 2; i < 100; i++) {
   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
+
+// Moved pizza list outside resizePizzas function as it does not change so it can be static. 
+// Also the length was moved out of that function. This has to occure after pizzas are created
+// in the loop above.
+var RandomPizzas = document.getElementsByClassName("randomPizzaContainer");
+var RandomPizzasLength = RandomPizzas.length;
 
 // User Timing API again. These measurements tell you how long it took to generate the initial pizzas
 window.performance.mark("mark_end_generating");
@@ -524,12 +531,13 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 // https://www.igvita.com/slides/2012/devtools-tips-and-tricks/jank-demo.html
 
 // Moves the sliding background pizzas based on scroll position
+// Changed to getElementByClassName to imporve performance also this var array
+// is only created once rather than each time the update function is called.
+var items = document.getElementsByClassName('mover');
+// Improved update function
 function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
-
-  // Changed to getElementByClassName to imporve performance
-  var items = document.getElementsByClassName('mover');
 
   // Reduced workload in the loop
   var scrollTop = (document.body.scrollTop / 1250);
@@ -574,6 +582,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza_new.png";
+    // Resized image to prevent the need for h & w, also reduced the file size of image.
+    // Added transform attributes to put image in new layer.
     //elem.style.height = "100px";
     //elem.style.width = "73.333px";
     elem.style.width = "auto";

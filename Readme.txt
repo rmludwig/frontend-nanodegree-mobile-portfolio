@@ -11,7 +11,21 @@ INSTRUCTIONS
 
 
 TESTING INSTRUCTIONS
-  - To test the main index.tml load it in your browser and run timeoine in dev tools. Also the google pagespeed insights site can be used one you set up a local web server to host the page and create the ngrok tunnel.
+  - To test the main index.html load it in your browser and run timeline in dev tools. 
+  - To test index.html with google pagespeed insights site ....
+
+  can be used one you set up a local web server to host the page and create the ngrok tunnel.
+
+
+REFERENCES
+  * Udacity course material
+  * Google developer documentation
+  * An article on node list and get/selector speed at http://www.nczonline.net/blog/2010/09/28/why-is-getelementsbytagname-faster-that-queryselectorall/ 
+  * Udacity/Piazza forums
+  * Node.js documentation
+  * gulp.js documentation
+  * Rabbit & Udacity Coffee, Coach, & Code sessions.
+  * Github and the udacity/fend-office-hours documentation (recommended by coaches)
 
 
 RICH's NOTES
@@ -52,6 +66,9 @@ TESTING
     Look into compression oportunities for images and other files.
 
 #### Part 2 (pizza fps)
+
+   I read on google's development site and at 
+
 
 querySelector
 querySelectorAll (read about perfromance issues when used in loops due to static node list which takes longer to build as opposed to Live node list that is built as needed on the fly)
