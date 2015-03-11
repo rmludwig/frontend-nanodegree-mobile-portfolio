@@ -5,16 +5,30 @@ This Project 4 for the Nanodegree - Front End Web Developer course is specific t
 Below you will find my notes and observations from working on this project.
 
 
-INSTRUCTIONS
-  - For instructions on the projects please see the README.md file provided as a part of the forked portfolio.
-  - Additional information can be found on P4, including the rubric, at https://www.udacity.com/course/viewer/#!/c-nd001/l-2735848561/m-2664138537
+Check out the original README.md, renamed to Instructions_README.md, provided with the forked portfolio repo for more information on this project and the instructions I followed to complete it.
+
+Additional information can be found on P4, including the rubric, at https://www.udacity.com/course/viewer/#!/c-nd001/l-2735848561/m-2664138537
 
 
 TESTING INSTRUCTIONS
-  - To test the main index.html load it in your browser and run timeline in dev tools. 
-  - To test index.html with google pagespeed insights site ....
+  - Clone the repo on your local machine from https://github.com/rmludwig/frontend-nanodegree-mobile-portfolio
+  - For PART 1 to test the main index.html load it in your browser and run timeline in dev tools. 
+  - To test index.html with google pagespeed insights via local webserver go to the directory of the cloned repo you created above via cli. 
+      Then in that window start the webserver with:
+      python -m SimpleHTTPServer 8080
 
-  can be used one you set up a local web server to host the page and create the ngrok tunnel.
+      Then in a sepperate window make your tunnel with:
+      ./ngrok 8080
+
+      The ngrok script will return a public internet URL you can use for pagespeed insights.
+
+    OR AS AN ALTERNATIVE
+
+      You can use http://rmlsn.net/P4WebOptimization/ where I have the project hosted at this time.
+  
+  - For PART 2 on FPS you can load the pizza.html page from your local repo.
+  - Check the console for speed measurements.
+  - In the same directory as this file I have some timeline data including the timeline-final_scroll which is the last timeline I saved.
 
 
 REFERENCES
@@ -22,8 +36,10 @@ REFERENCES
   * Google developer documentation
   * An article on node list and get/selector speed at http://www.nczonline.net/blog/2010/09/28/why-is-getelementsbytagname-faster-that-queryselectorall/ 
   * Udacity/Piazza forums
+  * W3schools website
   * Node.js documentation
-  * gulp.js documentation
+  * Download ngrok at https://ngrok.com
+  * gulp.js documentation (http://travismaynard.com/writing/getting-started-with-gulp)
   * Rabbit & Udacity Coffee, Coach, & Code sessions.
   * Github and the udacity/fend-office-hours documentation (recommended by coaches)
 
@@ -59,48 +75,30 @@ TESTING
       Moved the CSS content into HTML file due to its small size. Noticable perfromance gain.
    SUCCESS!!
 
+   After the initial work I also discovered that when the page was hosted on the internet, versus using ngrok, the large pizza image was an issue. At that time I also created a "thumb" image for the pizza shop and changed the index.html to use the thumb.
+
    Other things I could do:
-    Possibly some additional minification could help especially if the site was larger.
-    Investigate the server side setting or use .htaccess to provide some caching of page resources.
-    Look more closely at image optimizations.
-    Look into compression oportunities for images and other files.
+    1. Possibly some additional minification could help especially if the site was larger. There is a minified js file in dist/ but the original file was so small I'm not pointing index.html to the min version. However, minification is in use for pizza.html.
+    2. Investigate the server side setting or use .htaccess to provide some caching of page resources. This is out of scope for this project but could be usefull in real world applicaitons.
+    3. Look more closely at image optimizations. Look into other compression oportunities for images and other files.
+
 
 #### Part 2 (pizza fps)
 
-   I read on google's development site and at 
+   I read on google's development site and from other sites in the references above that the querySelector and querySelectorAll were a possible issue on the FPS testing. I read about perfromance issues when used in loops due to static node list which takes longer to build as opposed to Live node list that is built as needed on the fly. So I replaced those methods in the code. MEthods I used instead were like getElementById or getElementsByClassName.
+
+   Then I examined the loops closely and tried to make them as efficient as possible removing the unneccessary parts. Between this change and the one above the efficiency gains were significant. Measuring via the console the resize was less than 3ms and the scroll was less than 1ms. But I was still struggling with the amount of time paint would take.
+
+   I then spent some time optimizing the images for the background. I recorded several timelines (you can find them in this dir) as I worked through different image options. Once I found the better oth the ones I tried I was still struggling with paint time.
+
+   I then went to a coffee, Coach, and Code session. In that session the coaches were very helpful and pointed me to the compisite layer idea. With that coaching I was able to optimize the site furter using the transform hacks they pointed me to. After that optimization I was satified with the console measurements and the FPS status in my timeline for scrolling.
+
+   I furhter tweaked the pizza page with some minification and cleaned up comments.
+
+   SUCCESS!!
 
 
-querySelector
-querySelectorAll (read about perfromance issues when used in loops due to static node list which takes longer to build as opposed to Live node list that is built as needed on the fly)
-->>>
-  getElementById  
-  getElementsByClassName
+SUMMARY
+  This project was certainly a great learning experience. I found the FPS part a bit frustrating but in the end it was very educational. Thanks for looking over my project. I hope you are satified with my changes. Also thanks for reading this far. :-P Have a good day!!!!
 
-moved width assignment outside the loop
-
-changed height on pizzas to make room for the Udacity special when size is small
-
-
-minify with gulp
-
-http://travismaynard.com/writing/getting-started-with-gulp
-
-
-
-
-Things to add to my Web Perf notes
-
-Run a local web server (works on mac)
-
-  ```bash
-  $> cd /path/to/your-project-folder
-  $> python -m SimpleHTTPServer 8080
-  ```
-
-
-  ``` bash
-  $> cd /path/to/your-project-folder
-  $> ./ngrok 8080
-  ```
-
-MUST have ngrok in that folder. Download at https://ngrok.com
+  

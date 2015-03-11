@@ -1,0 +1,21 @@
+NOTES ON gh_pages
+
+
+While not submited to Udacity, I am hosting this site on github pages just 
+to gain experience with it. To keep changes in master update on the github
+pages follow these steps.
+
+Starting from the gh-pages brach (which is the code for Github Pages)
+
+git branch
+git checkout master
+git pull
+git checkout gh-pages
+git merge master
+git branch
+git push
+git branch
+git status
+
+
+
