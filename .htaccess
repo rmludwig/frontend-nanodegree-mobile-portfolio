@@ -1,0 +1,14 @@
+# Testing with the pagespeed insight tool and the SimpleHTTPServer running on my
+# machine. Not expecting this to help pagespeed insights but this could be
+# useful in a real implementation of this site on an appache server.
+
+#cache css, javascript and text files for one week  
+<FilesMatch ".(js|css|txt)$">  
+Header set Cache-Control "max-age=604800"  
+</FilesMatch>  
+
+#cache images for one month  
+<FilesMatch ".(gif|jpg|jpeg|png)$">  
+Header set Cache-Control "max-age=2592000"  
+</FilesMatch>  
+
