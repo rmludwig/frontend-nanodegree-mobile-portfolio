@@ -7,6 +7,7 @@ var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
+var cssmin = require('gulp-cssmin');
 
 // Lint Task
 gulp.task('lint', function() {
@@ -50,13 +51,22 @@ gulp.task('scriptsView', function() {
         .pipe(gulp.dest('views/dist'));
 });
 
+// Minify the VIEW css using add on module
+gulp.task('cssStyleView', function () {
+    gulp.src('views/css/style.css')
+        .pipe(cssmin())
+        .pipe(rename({suffix: '.min'}))
+        .pipe(gulp.dest('views/dist'));
+});
+
 // Watch Files For Changes
 gulp.task('watch', function() {
-    gulp.watch('js/*.js', ['lint', 'scripts', 'lintView', 'scriptsView']);
+    gulp.watch('js/*.js', ['lint', 'scripts']);
+    gulp.watch('views/css/style.css', ['cssStyleView']);
     gulp.watch('views/js/*.js', ['lintView', 'scriptsView']);
     gulp.watch('scss/*.scss', ['sass']);
 });
 
 // Default Task
-gulp.task('default', ['lint', 'lintView', 'sass', 'scripts', 'scriptsView', 'watch']);
+gulp.task('default', ['lint', 'lintView', 'sass', 'scripts', 'scriptsView', 'cssStyleView', 'watch']);
 
